@@ -8,7 +8,6 @@ public class Cipher {
     public Cipher(){
 
     }
-
     public String getMessage() {
         return message;
     }
@@ -16,7 +15,6 @@ public class Cipher {
     public void setMessage(String message) {
         this.message = message;
     }
-
     public int getKey() {
         return key;
     }
@@ -24,31 +22,22 @@ public class Cipher {
     public void setKey(int key) {
         this.key = key;
     }
-    public String encrypt(){
-        char[]message=this.getMessage().toCharArray();
-        String output= "";
-        for(int i = 0; i < message.length; i++){
-            char c = message[i];
-            int charPos = this.alphabets.indexOf(c);
-            int newPos = charPos + this.getKey();
-            char newChar = this.alphabets.charAt(newPos);
-            output = output + newChar;
+    public String encrypt(String text, int key){
 
+        StringBuilder encryptedText = new StringBuilder();
+
+        for (char c : message.toCharArray()) {
+            if (Character.isLetter(c)) {
+                char base = Character.isUpperCase(c) ? 'A' : 'a';
+                encryptedText.append((char) ((c - base + key) % 26 + base));
+            } else {
+                encryptedText.append(c);
+            }
         }
-        return output;
+        return encryptedText.toString();
     }
-    public String decrypt(){
-        char[]message=this.getMessage().toCharArray();
-        String output= "";
-        for(int i = 0; i < message.length; i++){
-            char c = message[i];
-            int charPos = this.alphabets.indexOf(c);
-            int newPos = charPos - this.getKey();
-            char newChar = this.alphabets.charAt(newPos);
-            output = output + newChar;
-
-        }
-        return output;
+    public String decrypt(String text, int key) {
+        return encrypt(text, 26 - key); // Decryption is just encryption with the reverse key
     }
 }
 

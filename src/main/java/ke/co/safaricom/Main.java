@@ -15,6 +15,11 @@ public class Main {
 
             System.out.println("Enter a process(e/d): ");
             String process = scanner.next();
+                while(!((process.startsWith("e"))||(process.startsWith("d")))){
+                    System.out.println("Invalid option, please enter the right process");
+                    System.out.println("Enter a process(e/d): ");
+                    process = scanner.next();
+                }
 
             System.out.println("Enter a key: ");
             int key = scanner.nextInt();
@@ -25,14 +30,14 @@ public class Main {
             String output = "";
 
             if(process.startsWith("e")){
-                output = cipher.encrypt();
+                output = cipher.encrypt(message, key);
             }
-            else{
-                output = cipher.decrypt();
+
+            else if (process.startsWith("d")) {
+                output = cipher.decrypt(message, key);
             }
 
             System.out.println("Your output message is : " + output);
-
 
             System.out.println("Do you want to continue? (c/q): ");
             String nextStep = scanner.next();
